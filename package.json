@@ -1,6 +1,6 @@
 {
 	"name": "react-xlsx-export",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Excel export (React + TypeScript)",
 	"author": "htetarkarhlaing <htet.arkar.hlaing.official.mm@gmail.com>",
 	"license": "MIT",
