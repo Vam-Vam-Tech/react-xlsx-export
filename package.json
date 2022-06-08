@@ -15,9 +15,9 @@
 		"start": "rollup -c -w"
 	},
 	"peerDependencies": {
+		"file-saver": ">= 2.0.5",
 		"react": ">= 16.8.0",
 		"react-dom": ">= 16.8.0",
-		"file-saver": ">= 2.0.5",
 		"xlsx": ">= 0.18.5"
 	},
 	"devDependencies": {
