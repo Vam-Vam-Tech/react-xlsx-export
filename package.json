@@ -14,11 +14,13 @@
 		"build": "rollup -c",
 		"start": "rollup -c -w"
 	},
-	"peerDependencies": {
+	"dependencies": {
 		"file-saver": ">= 2.0.5",
-		"react": ">= 16.8.0",
-		"react-dom": ">= 16.8.0",
 		"xlsx": ">= 0.18.5"
+	},
+	"peerDependencies": {
+		"react": ">= 16.8.0",
+		"react-dom": ">= 16.8.0"
 	},
 	"devDependencies": {
 		"@types/file-saver": "^2.0.5",
