@@ -1,41 +1,35 @@
 import * as React from "react";
 import "./styles.scss";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-
-export type IReactXlsxExport = {
-	data: any;
-	filename: string;
-	className?: string;
-	children?: JSX.Element;
-};
+import { IReactXlsxExport } from "./types";
+import exportExcel from "./lib/ExcelExport";
+import exportCsv from "./lib/CsvExport";
 
 const ReactXlsxExport: React.FC<IReactXlsxExport> = ({
 	data,
 	filename,
 	className,
 	children,
+	exportType,
+	styles,
 }) => {
-	const fileType =
-		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-	const fileExtension = ".xlsx";
-
-	const exportToCSV = ({ csvData, fileName }: any) => {
-		const ws = XLSX.utils.json_to_sheet(csvData);
-		const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-		const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-		const data = new Blob([excelBuffer], { type: fileType });
-		FileSaver.saveAs(data, fileName + fileExtension);
+	const handleExport = () => {
+		if (exportType === "csv") {
+			exportCsv({ data: data, name: filename });
+		} else {
+			exportExcel({ data: data, name: filename });
+		}
 	};
 
 	return (
 		<button
-			className={className ? className : "button"}
-			onClick={() => exportToCSV({ csvData: data, fileName: filename })}
+			className={className ? className : "react-xlsx-export-btn"}
+			style={styles}
+			onClick={handleExport}
 		>
-			{children ? children : "Download Excel"}
+			{children ? children : "Export"}
 		</button>
 	);
 };
 
 export default ReactXlsxExport;
+export { exportExcel, exportCsv };

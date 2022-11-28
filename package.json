@@ -1,10 +1,17 @@
 {
 	"name": "react-xlsx-export",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Excel export (React + TypeScript)",
 	"author": "htetarkarhlaing <htet.arkar.hlaing.official.mm@gmail.com>",
 	"license": "MIT",
-	"repository": "htetarkarhlaing/react-xlsx-export",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Vam-Vam-Tech/react-xlsx-export.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Vam-Vam-Tech/react-xlsx-export/issues"
+	},
+	"homepage": "https://github.com/Vam-Vam-Tech/react-xlsx-export#readme",
 	"main": "dist/index.js",
 	"engines": {
 		"node": ">=8",
@@ -13,10 +20,6 @@
 	"scripts": {
 		"build": "rollup -c",
 		"start": "rollup -c -w"
-	},
-	"dependencies": {
-		"file-saver": ">= 2.0.5",
-		"xlsx": ">= 0.18.5"
 	},
 	"peerDependencies": {
 		"react": ">= 16.8.0",
@@ -28,14 +31,12 @@
 		"@types/react-dom": "^16.0.5",
 		"babel-core": "^6.26.3",
 		"babel-runtime": "^6.26.0",
-		"file-saver": "^2.0.5",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
 		"rollup": "^1.29.0",
 		"rollup-plugin-sass": "^1.2.2",
 		"rollup-plugin-typescript2": "^0.25.3",
-		"typescript": "^2.8.3",
-		"xlsx": "^0.18.5"
+		"typescript": "^2.8.3"
 	},
 	"files": [
 		"dist"
@@ -47,5 +48,9 @@
 		"export",
 		"xlsx-export",
 		"react-xlsx-export"
-	]
+	],
+	"dependencies": {
+		"file-saver": "^2.0.5",
+		"xlsx": "^0.18.5"
+	}
 }

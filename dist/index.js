@@ -14,25 +14,48 @@ function ___$insertStyle(css) {
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-var FileSaver = require('file-saver');
 var XLSX = require('xlsx');
+var fileSaver = require('file-saver');
 
-___$insertStyle(".button {\n  --bg-color: #f3f3f3;\n  --base-color: #666;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100px;\n  width: 70px;\n  margin: 10% auto;\n  border: 3px solid var(--base-color);\n  border-radius: 5px;\n  color: var(--base-color);\n  background-color: var(--bg-color);\n  cursor: pointer;\n  overflow: hidden;\n}\n.button:hover {\n  color: var(--bg-color);\n  background-color: var(--base-color);\n  border-color: var(--bg-color);\n}");
+___$insertStyle(".react-xlsx-export-btn {\n  box-sizing: border-box;\n  appearance: none;\n  background-color: transparent;\n  border: 2px solid #2cc79d;\n  border-radius: 0.6em;\n  color: #2cc79d;\n  cursor: pointer;\n  display: flex;\n  align-self: center;\n  font-size: 1rem;\n  font-weight: 400;\n  line-height: 1;\n  margin: 20px;\n  padding: 1.2em 2.8em;\n  text-decoration: none;\n  text-align: center;\n  text-transform: uppercase;\n  font-family: \"Montserrat\", sans-serif;\n  font-weight: 700;\n  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;\n}\n.react-xlsx-export-btn:hover {\n  box-shadow: 0 0 40px 40px #2cc79d inset;\n}\n.react-xlsx-export-btn:focus {\n  color: #fff;\n  outline: 0;\n}");
 
-var ReactXlsxExport = function (_a) {
-    var data = _a.data, filename = _a.filename, className = _a.className, children = _a.children;
+var saver = function (_a) {
+    var name = _a.name, file = _a.file, type = _a.type, extension = _a.extension;
+    var data = new Blob([file], { type: type });
+    fileSaver.saveAs(data, name + extension);
+};
+
+var exportExcel = function (_a) {
+    var data = _a.data, name = _a.name;
     var fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     var fileExtension = ".xlsx";
-    var exportToCSV = function (_a) {
-        var csvData = _a.csvData, fileName = _a.fileName;
-        var ws = XLSX.utils.json_to_sheet(csvData);
-        var wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-        var excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        var data = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data, fileName + fileExtension);
+    var ws = XLSX.utils.json_to_sheet(data);
+    var wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    var excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    saver({ name: name, file: excelBuffer, type: fileType, extension: fileExtension });
+};
+
+var exportCsv = function (_a) {
+    var data = _a.data, name = _a.name;
+    var fileType = "data:text/plain;charset=utf-8";
+    var fileExtension = ".csv";
+    saver({ name: name, file: data, type: fileType, extension: fileExtension });
+};
+
+var ReactXlsxExport = function (_a) {
+    var data = _a.data, filename = _a.filename, className = _a.className, children = _a.children, exportType = _a.exportType, styles = _a.styles;
+    var handleExport = function () {
+        if (exportType === "csv") {
+            exportCsv({ data: data, name: filename });
+        }
+        else {
+            exportExcel({ data: data, name: filename });
+        }
     };
-    return (React.createElement("button", { className: className ? className : "button", onClick: function () { return exportToCSV({ csvData: data, fileName: filename }); } }, children ? children : "Download Excel"));
+    return (React.createElement("button", { className: className ? className : "react-xlsx-export-btn", style: styles, onClick: handleExport }, children ? children : "Export"));
 };
 
 exports.default = ReactXlsxExport;
+exports.exportCsv = exportCsv;
+exports.exportExcel = exportExcel;
 //# sourceMappingURL=index.js.map
